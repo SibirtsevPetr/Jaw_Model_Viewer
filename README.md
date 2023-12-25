@@ -1,29 +1,5 @@
 # Jaw Model Viewer
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+![alt text](https://github.com/SibirtsevPetr/Jaw_Model_Viewer/blob/master/public/img/Screenshot%202023-12-25%20154640.png?raw=true)
+![alt text](https://github.com/SibirtsevPetr/Jaw_Model_Viewer/blob/master/public/img/Screenshot%202023-12-25%20154650.png?raw=true)
+![alt text](https://github.com/SibirtsevPetr/Jaw_Model_Viewer/blob/master/public/img/Screenshot%202023-12-25%20154711.png?raw=true)
