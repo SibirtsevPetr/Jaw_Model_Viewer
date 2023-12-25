@@ -33,7 +33,16 @@ function rotateLowerJaw(direction) {
 }
 
 function startTranslation() {
+  if (jawViewerRef.value) {
     jawViewerRef.value.translateUpperJaw();
+  }
+}
+
+async function checkCollision() {
+  if (jawViewerRef.value) {
+    jawViewerRef.value.translateUpperJaw();
+    jawViewerRef.value.detectAndHighlightCollisions();
+  }
 }
 </script>
 
@@ -51,6 +60,7 @@ function startTranslation() {
         @rotateUpperJaw="rotateUpperJaw"
         @rotateLowerJaw="rotateLowerJaw"
         @startTranslation="startTranslation"
+        @checkCollision="checkCollision"
     />
     <JawModelViewer
         ref="jawViewerRef"

@@ -153,10 +153,10 @@ export default {
 
     getRandomColor() {
       // Generate a random color
-      const letters = '0123456789ABCDEF';
+      const letters = '456789ABCDEF';
       let color = '#';
       for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 12)];
       }
       return color;
     },
@@ -183,23 +183,65 @@ export default {
     },
 
     translateUpperJaw() {
-      console.log("translateUpperJaw method called in JawModelViewer");
       const step = 0.1; // Distance to move in each step
       const lowerJawPosition = this.lowerJaw.position;
       const upperJawPosition = this.upperJaw.position;
 
-      console.log(upperJawPosition.z, lowerJawPosition.z)
-
       // Check if the upper jaw has collided with the lower jaw
       if (upperJawPosition.z + step < lowerJawPosition.z) {
-        console.log("mooving");
 
         // Move the upper jaw closer to the lower jaw
         this.upperJaw.position.z += step;
         // Use requestAnimationFrame for smoother animation
         requestAnimationFrame(this.translateUpperJaw);
       }
-    }
+    },
+
+    detectAndHighlightCollisions() {
+      if (this.upperJaw && this.lowerJaw) {
+        for (let i = 1; i <= 14; i++) {
+          const upperToothName = `appworkdirroot-estimationmodelsupper${i}_crownstl`;
+          const lowerToothName = `appworkdirroot-estimationmodelslower${i}_crownstl`;
+
+          const upperTooth = this.findToothByName(this.upperJaw, upperToothName);
+          const lowerTooth = this.findToothByName(this.lowerJaw, lowerToothName);
+
+          if (upperTooth && lowerTooth) {
+            const distance = this.calculateDistanceBetweenTeeth(upperTooth, lowerTooth);
+            if (distance > 7.5) {
+              this.changeMeshColor(upperTooth, 'yellow');
+              this.changeMeshColor(lowerTooth, 'yellow');
+            }
+          }
+        }
+      }
+    },
+
+    findToothByName(jaw, toothName) {
+      let tooth = null;
+      jaw.traverse((child) => {
+        if (child.name === toothName) {
+          tooth = child;
+        }
+      });
+      return tooth;
+    },
+
+    calculateDistanceBetweenTeeth(upperTooth, lowerTooth) {
+      const upperBox = new THREE.Box3().setFromObject(upperTooth);
+      const lowerBox = new THREE.Box3().setFromObject(lowerTooth);
+      const upperCenter = new THREE.Vector3();
+      const lowerCenter = new THREE.Vector3();
+      upperBox.getCenter(upperCenter);
+      lowerBox.getCenter(lowerCenter);
+      return upperCenter.distanceTo(lowerCenter);
+    },
+
+    changeMeshColor(mesh, color) {
+      if (mesh) {
+        mesh.material.color.set(color);
+      }
+    },
   },
   watch: {
     lowerJawFile(file) {

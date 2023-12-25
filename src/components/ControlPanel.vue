@@ -41,6 +41,7 @@
       </div>
 
       <button class="control-btn" @click="$emit('startTranslation')">Translate Upper Jaw</button>
+      <button class="control-btn" @click="$emit('checkCollision')">Region of collision</button>
 
     </div>
   </div>
