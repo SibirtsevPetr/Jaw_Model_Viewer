@@ -112,14 +112,6 @@ export default {
       });
     },
 
-    loadDefaultModels() {
-      // Loading the default upper jaw model
-      this.loadModel('/glb/upper-jaw-vertical.glb', [0, 20, 0], [0, 0, 0], 'upperJaw');
-
-      // Loading the default lower jaw model
-      this.loadModel('/glb/lower-jaw-vertical.glb', [0, 20, 0], [Math.PI, 0, 0], 'lowerJaw');
-    },
-
     loadModel(file, position, rotation, assignTo) {
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -138,11 +130,35 @@ export default {
               existingModel.dispose();
             }
           }
+
+          // Change the color of each tooth
+          this.colorizeTeeth(model);
+
           this[assignTo] = markRaw(model);
           this.scene.add(model);
         });
       };
       reader.readAsArrayBuffer(file);
+    },
+
+    colorizeTeeth(model) {
+      model.traverse((child) => {
+        if (child.isMesh) {
+          // Change a tooth material applying random color to each tooth
+          const color = this.getRandomColor();
+          child.material = new THREE.MeshPhongMaterial({ color });
+        }
+      });
+    },
+
+    getRandomColor() {
+      // Generate a random color
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
     },
 
     // Method to update jaw position (moved from toggleJaw)
