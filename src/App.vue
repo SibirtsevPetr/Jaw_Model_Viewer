@@ -7,6 +7,9 @@ const jawOpen = ref(false);
 const lowerJawFile = ref(null);
 const upperJawFile = ref(null);
 const jawViewerRef = ref(null);
+const upperJawInfo = ref({});
+const lowerJawInfo = ref({});
+
 
 function toggleJaw() {
   jawOpen.value = !jawOpen.value;
@@ -54,6 +57,8 @@ async function checkCollision() {
   <main>
     <ControlPanel
         :jawOpen="jawOpen"
+        :upperJawInfo="upperJawInfo"
+        :lowerJawInfo="lowerJawInfo"
         @toggleJaw="toggleJaw"
         @loadLowerJaw="setLowerJawFile"
         @loadUpperJaw="setUpperJawFile"
@@ -67,6 +72,8 @@ async function checkCollision() {
         :jawOpen="jawOpen"
         :lowerJawFile="lowerJawFile"
         :upperJawFile="upperJawFile"
+        @updateUpperJawInfo="upperJawInfo = $event"
+        @updateLowerJawInfo="lowerJawInfo = $event"
     />
   </main>
 </template>

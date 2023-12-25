@@ -43,6 +43,35 @@
       <button class="control-btn" @click="$emit('startTranslation')">Translate Upper Jaw</button>
       <button class="control-btn" @click="$emit('checkCollision')">Region of collision</button>
 
+      <table class="bounding-box-info">
+        <tbody>
+        <tr>
+          <td class="info-text">Jaw</td>
+          <td class="info-text">Upper Jaw</td>
+          <td class="info-text">Lower Jaw</td>
+        </tr>
+        <tr>
+          <td class="info-text">Center</td>
+          <td class="info-text">{{ upperJawInfo.center }}</td>
+          <td class="info-text">{{ lowerJawInfo.center }}</td>
+        </tr>
+        <tr>
+          <td class="info-text">Size</td>
+          <td class="info-text">{{ upperJawInfo.size }}</td>
+          <td class="info-text">{{ lowerJawInfo.size }}</td>
+        </tr>
+        <tr>
+          <td class="info-text">Min</td>
+          <td class="info-text">{{ upperJawInfo.min }}</td>
+          <td class="info-text">{{ lowerJawInfo.min }}</td>
+        </tr>
+        <tr>
+          <td class="info-text">Max</td>
+          <td class="info-text">{{ upperJawInfo.max }}</td>
+          <td class="info-text">{{ lowerJawInfo.max }}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -51,7 +80,9 @@
 export default {
   name: 'ControlPanel',
   props: {
-    jawOpen: Boolean
+    jawOpen: Boolean,
+    upperJawInfo: Object,
+    lowerJawInfo: Object,
   },
   data() {
     return {
@@ -222,5 +253,26 @@ export default {
 
 .right-btn {
   margin-left: 5px;
+}
+
+.bounding-box-info {
+  /* Styling for the table */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.bounding-box-info th, .bounding-box-info td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.info-text {
+  color: #444;
+}
+
+.bounding-box-info th {
+  background-color: #f2f2f2;
 }
 </style>

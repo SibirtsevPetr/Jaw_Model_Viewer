@@ -133,12 +133,14 @@ export default {
 
           // Change the color of each tooth
           this.colorizeTeeth(model);
-
+          this.updateUpperJawInfo(model)
+          this.updateLowerJawInfo(model)
           this[assignTo] = markRaw(model);
           this.scene.add(model);
         });
       };
       reader.readAsArrayBuffer(file);
+
     },
 
     colorizeTeeth(model) {
@@ -240,6 +242,62 @@ export default {
     changeMeshColor(mesh, color) {
       if (mesh) {
         mesh.material.color.set(color);
+      }
+    },
+
+    updateUpperJawInfo(model) {
+      if (model.name === 'upperJaw') {
+        const bbox = new THREE.Box3().setFromObject(model);
+        const center = bbox.getCenter(new THREE.Vector3());
+        const sizeVector = bbox.getSize(new THREE.Vector3());
+
+        // Calculate the magnitude of the size vector
+        const sizeMagnitude = Math.sqrt(sizeVector.x ** 2 + sizeVector.y ** 2 + sizeVector.z ** 2);
+
+        // Format the center coordinates to two decimal places
+        const formattedCenter = `(${center.x.toFixed(2)}, ${center.y.toFixed(2)}, ${center.z.toFixed(2)})`;
+
+          // Format the size magnitude to two decimal places
+        const formattedSize = sizeMagnitude.toFixed(2);
+
+        const formattedMin = `(${bbox.min.x.toFixed(2)}, ${bbox.min.y.toFixed(2)}, ${bbox.min.z.toFixed(2)})`;
+        const formattedMax = `(${bbox.max.x.toFixed(2)}, ${bbox.max.y.toFixed(2)}, ${bbox.max.z.toFixed(2)})`;
+
+        // Emitting the information to the parent
+        this.$emit('updateUpperJawInfo', {
+          center: formattedCenter.toString(),
+          size: formattedSize.toString(),
+          min: formattedMin.toString(),
+          max: formattedMax.toString()
+        });
+      }
+    },
+
+    updateLowerJawInfo(model) {
+      if (model.name === 'lowerJaw') {
+        const bbox = new THREE.Box3().setFromObject(model);
+        const center = bbox.getCenter(new THREE.Vector3());
+        const sizeVector = bbox.getSize(new THREE.Vector3());
+
+        // Calculate the magnitude of the size vector
+        const sizeMagnitude = Math.sqrt(sizeVector.x ** 2 + sizeVector.y ** 2 + sizeVector.z ** 2);
+
+        // Format the center coordinates to two decimal places
+        const formattedCenter = `(${center.x.toFixed(2)}, ${center.y.toFixed(2)}, ${center.z.toFixed(2)})`;
+
+        // Format the size magnitude to two decimal places
+        const formattedSize = sizeMagnitude.toFixed(2);
+
+        const formattedMin = `(${bbox.min.x.toFixed(2)}, ${bbox.min.y.toFixed(2)}, ${bbox.min.z.toFixed(2)})`;
+        const formattedMax = `(${bbox.max.x.toFixed(2)}, ${bbox.max.y.toFixed(2)}, ${bbox.max.z.toFixed(2)})`;
+
+        // Emitting the information to the parent
+        this.$emit('updateLowerJawInfo', {
+          center: formattedCenter.toString(),
+          size: formattedSize.toString(),
+          min: formattedMin.toString(),
+          max: formattedMax.toString()
+        });
       }
     },
   },
