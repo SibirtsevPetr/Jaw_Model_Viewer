@@ -11,14 +11,16 @@
       <button class="control-btn" @click="$emit('toggleJaw')">{{ jawOpen ? 'Close Jaw' : 'Open Jaw' }}</button>
 
       <div class="file-upload">
+        <label for="upper-jaw-upload">Upload Upper Jaw</label>
+        <input id="upper-jaw-upload" type="file" @change="setUpperJawFile" accept=".glb">
+      </div>
+
+      <div class="file-upload">
         <label for="lower-jaw-upload">Upload Lower Jaw</label>
         <input id="lower-jaw-upload" type="file" @change="setLowerJawFile" accept=".glb">
       </div>
 
-      <div class="file-upload">
-        <label for="upper-jaw-upload">Upload Upper Jaw</label>
-        <input id="upper-jaw-upload" type="file" @change="setUpperJawFile" accept=".glb">
-      </div>
+
 
       <button class="apply-btn" @click="applyFiles">Apply</button>
     </div>
