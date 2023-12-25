@@ -166,7 +166,21 @@ export default {
       if (this.lowerJaw) {
         this.lowerJaw.position.z = this.jawOpen ? 10 : 0;
       }
-    }
+    },
+
+    rotateUpperJaw(direction) {
+      const angle = direction === 'left' ? -Math.PI / 32 : Math.PI / 32;
+      if (this.upperJaw) {
+        this.upperJaw.rotation.y += angle;
+      }
+    },
+
+    rotateLowerJaw(direction) {
+      const angle = direction === 'left' ? -Math.PI / 32 : Math.PI / 32;
+      if (this.lowerJaw) {
+        this.lowerJaw.rotation.y += angle;
+      }
+    },
   },
   watch: {
     lowerJawFile(file) {

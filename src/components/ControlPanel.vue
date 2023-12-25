@@ -7,22 +7,39 @@
     <button class="close-panel" @click="panelClosed = true">X</button>
 
     <div class="panel-content">
-      <h3 class="panel-title">Control Panel</h3>
+      <h2 class="panel-title">Control Panel</h2>
+
+      <div class="upload">
+        <h3 class="upload-title">Upload</h3>
+        <div class="file-upload">
+          <label for="upper-jaw-upload">Upload Upper Jaw</label>
+          <input id="upper-jaw-upload" type="file" @change="setUpperJawFile" accept=".glb">
+        </div>
+
+        <div class="file-upload">
+          <label for="lower-jaw-upload">Upload Lower Jaw</label>
+          <input id="lower-jaw-upload" type="file" @change="setLowerJawFile" accept=".glb">
+        </div>
+
+        <button class="apply-btn" @click="applyFiles">Apply</button>
+      </div>
+
       <button class="control-btn" @click="$emit('toggleJaw')">{{ jawOpen ? 'Close Jaw' : 'Open Jaw' }}</button>
 
-      <div class="file-upload">
-        <label for="upper-jaw-upload">Upload Upper Jaw</label>
-        <input id="upper-jaw-upload" type="file" @change="setUpperJawFile" accept=".glb">
+      <h3 class="rotation-title">Rotate Jaws</h3>
+      <div class="rotation-controls">
+        <div class="jaw-control">
+          <div class="jaw-label">Rotate Upper Jaw</div>
+          <button class="rotate-btn left-btn" @click="$emit('rotateUpperJaw', 'left')">&lt;</button>
+          <button class="rotate-btn right-btn" @click="$emit('rotateUpperJaw', 'right')">&gt;</button>
+        </div>
+        <div class="jaw-control">
+          <div class="jaw-label">Rotate Lower Jaw</div>
+          <button class="rotate-btn left-btn" @click="$emit('rotateLowerJaw', 'left')">&lt;</button>
+          <button class="rotate-btn right-btn" @click="$emit('rotateLowerJaw', 'right')">&gt;</button>
+        </div>
       </div>
 
-      <div class="file-upload">
-        <label for="lower-jaw-upload">Upload Lower Jaw</label>
-        <input id="lower-jaw-upload" type="file" @change="setLowerJawFile" accept=".glb">
-      </div>
-
-
-
-      <button class="apply-btn" @click="applyFiles">Apply</button>
     </div>
   </div>
 </template>
@@ -107,8 +124,15 @@ export default {
 }
 
 .panel-title {
-  margin: 10px 0;
-  font-size: 1.2em;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.upload-title {
+  font-size: 1.5em;
+  margin-left: 3px;
   color: #333;
 }
 
@@ -118,16 +142,81 @@ export default {
   border: none;
   padding: 10px 15px;
   margin-bottom: 10px;
+  margin-top: 10px;
   cursor: pointer;
   width: 100%;
 }
 
 .file-upload {
   margin-bottom: 10px;
+  margin-left: 3px;
   color: #333;
 }
 
 .file-upload input {
   width: 100%;
+}
+
+.apply-btn {
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 30px;
+  min-height: 30px;
+  max-width: 200px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.upload {
+  border: 2px solid #4CAF50;
+}
+
+.rotation-title {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.rotation-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.jaw-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.jaw-label {
+  font-weight: bold;
+  color: #444;
+}
+
+.rotate-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9em;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.rotate-btn:hover {
+  background-color: #367c39;
+}
+
+.left-btn {
+  margin-right: 5px;
+}
+
+.right-btn {
+  margin-left: 5px;
 }
 </style>
