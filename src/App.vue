@@ -1,5 +1,13 @@
 <script setup> // Import ThreeScene
 import JawModelViewer from './components/JawModelViewer.vue';
+import { ref } from 'vue';
+import ControlPanel from './components/ControlPanel.vue';
+
+const jawOpen = ref(false);
+
+function toggleJaw() {
+  jawOpen.value = !jawOpen.value;
+}
 </script>
 
 <template>
@@ -9,7 +17,8 @@ import JawModelViewer from './components/JawModelViewer.vue';
   </header>
 
   <main>
-    <JawModelViewer />
+    <ControlPanel :jawOpen="jawOpen" @toggleJaw="toggleJaw" />
+    <JawModelViewer :jawOpen="jawOpen" />
   </main>
 </template>
 

@@ -1,7 +1,4 @@
 <template>
-  <div class="controls">
-    <button @click="toggleJaw">{{ jawOpen ? 'Close Jaw' : 'Open Jaw' }}</button>
-  </div>
   <div ref="threeContainer" class="three-container"></div>
 </template>
 
@@ -9,14 +6,21 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import ControlPanel from "@/components/ControlPanel.vue";
+import { ref } from 'vue';
+
+const jawOpen = ref(false);
 
 export default {
   name: 'JawModelViewer',
+  components: {ControlPanel},
 
+  props: {
+    jawOpen: Boolean
+  },
   data() {
     return {
-      lowerJaw: null, // Will hold a reference to the lower jaw model
-      jawOpen: false, // Track if the jaw is open
+      lowerJaw: null, // Reference to the lower jaw model
     };
   },
 
@@ -68,13 +72,14 @@ export default {
 
       // Loading the upper jaw model, rotating it, and adding to the scene
       loader.load('/glb/upper-jaw-vertical.glb', (gltf) => {
-        //gltf.scene.position.set(0, 0, -10); // Adjusted position for visibility
+        gltf.scene.position.set(0, 20, 0); // Adjusted position for visibility
         scene.add(gltf.scene);
       });
 
       // Loading the lower jaw model and positioning it
       loader.load('/glb/lower-jaw-vertical.glb', (gltf) => {
         gltf.scene.rotation.y = Math.PI; // Flipping the lower jaw as it's upside down
+        gltf.scene.position.set(0, 20, 0); // Adjusted position for visibility
         this.lowerJaw = gltf.scene; // Store a reference to the lower jaw model
         scene.add(gltf.scene);
       });
@@ -103,28 +108,27 @@ export default {
       });
     },
 
-    toggleJaw() {
-      // Check if the lower jaw is available
+    // Method to update jaw position (moved from toggleJaw)
+    updateJawPosition() {
       if (this.lowerJaw) {
-        // Toggle the jaw position
-        this.lowerJaw.position.z += this.jawOpen ? -10 : +10;
-
-        // Update the state
-        this.jawOpen = !this.jawOpen;
+        this.lowerJaw.position.z = this.jawOpen ? 10 : 0;
       }
-    },
+    }
   },
+  watch: {
+    jawOpen() {
+      this.updateJawPosition();
+    }
+  }
 };
+
+function toggleJaw() {
+  jawOpen.value = !jawOpen.value;
+}
+
 </script>
 
 <style>
-.controls {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-}
-
 .three-container {
   width: 100%;
   height: 100vh;
