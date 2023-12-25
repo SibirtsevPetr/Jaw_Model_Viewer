@@ -32,6 +32,9 @@ function rotateLowerJaw(direction) {
   }
 }
 
+function startTranslation() {
+    jawViewerRef.value.translateUpperJaw();
+}
 </script>
 
 <template>
@@ -47,6 +50,7 @@ function rotateLowerJaw(direction) {
         @loadUpperJaw="setUpperJawFile"
         @rotateUpperJaw="rotateUpperJaw"
         @rotateLowerJaw="rotateLowerJaw"
+        @startTranslation="startTranslation"
     />
     <JawModelViewer
         ref="jawViewerRef"

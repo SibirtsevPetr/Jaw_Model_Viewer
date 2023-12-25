@@ -24,7 +24,7 @@
         <button class="apply-btn" @click="applyFiles">Apply</button>
       </div>
 
-      <button class="control-btn" @click="$emit('toggleJaw')">{{ jawOpen ? 'Close Jaw' : 'Open Jaw' }}</button>
+      <button class="control-btn" @click="$emit('toggleJaw')">{{ 'Open Jaw' }}</button>
 
       <h3 class="rotation-title">Rotate Jaws</h3>
       <div class="rotation-controls">
@@ -39,6 +39,8 @@
           <button class="rotate-btn right-btn" @click="$emit('rotateLowerJaw', 'right')">&gt;</button>
         </div>
       </div>
+
+      <button class="control-btn" @click="$emit('startTranslation')">Translate Upper Jaw</button>
 
     </div>
   </div>
@@ -64,6 +66,7 @@ export default {
     setUpperJawFile(event) {
       this.tempUpperJawFile = event.target.files[0];
     },
+
     applyFiles() {
       if (this.tempLowerJawFile) {
         this.$emit('loadLowerJaw', this.tempLowerJawFile);
@@ -71,7 +74,7 @@ export default {
       if (this.tempUpperJawFile) {
         this.$emit('loadUpperJaw', this.tempUpperJawFile);
       }
-    }
+    },
   }
 };
 </script>

@@ -164,7 +164,7 @@ export default {
     // Method to update jaw position (moved from toggleJaw)
     updateJawPosition() {
       if (this.lowerJaw) {
-        this.lowerJaw.position.z = this.jawOpen ? 10 : 0;
+        this.upperJaw.position.z -= 5;
       }
     },
 
@@ -181,6 +181,25 @@ export default {
         this.lowerJaw.rotation.y += angle;
       }
     },
+
+    translateUpperJaw() {
+      console.log("translateUpperJaw method called in JawModelViewer");
+      const step = 0.1; // Distance to move in each step
+      const lowerJawPosition = this.lowerJaw.position;
+      const upperJawPosition = this.upperJaw.position;
+
+      console.log(upperJawPosition.z, lowerJawPosition.z)
+
+      // Check if the upper jaw has collided with the lower jaw
+      if (upperJawPosition.z + step < lowerJawPosition.z) {
+        console.log("mooving");
+
+        // Move the upper jaw closer to the lower jaw
+        this.upperJaw.position.z += step;
+        // Use requestAnimationFrame for smoother animation
+        requestAnimationFrame(this.translateUpperJaw);
+      }
+    }
   },
   watch: {
     lowerJawFile(file) {
